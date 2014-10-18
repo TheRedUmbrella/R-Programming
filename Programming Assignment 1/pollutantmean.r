@@ -4,6 +4,11 @@ pollutantmean <- function(directory, pollutant, id = 1:332){
   filenames <- paste(zeros,id,".csv", sep="")
   sizes <- nchar(filenames)
   filenames <- paste(directory,"/",substr(filenames,sizes-(filename_length-1),sizes),sep="")
+  obs <- NULL
+  for (file in filenames){
+    data <- read.csv(file)
+    obs <- c(obs,data[!is.na(data[pollutant]),pollutant])
+  }
   
-  return(filenames)
+  return(mean(obs))
 }
